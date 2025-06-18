@@ -18,5 +18,4 @@ for DIR in $RRDIRBASE-*; do
 done
 rr record "$1"
 echo $randomize_va_space | sudo tee /proc/sys/kernel/randomize_va_space &> /dev/null
-clear
 rr replay ${RRDIR}
