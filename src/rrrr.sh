@@ -5,9 +5,13 @@ if [ "$#" -eq 0 ]; then
     exit 1
 fi
 
-RRTARGET=$(basename "$1")
-RRDIRBASE=/home/alex/.local/share/rr/${RRTARGET}
+
+RRTARGET="$1"
+RRTARGETBASENAME=$(basename $RRTARGET)
+RRDIRBASE=/home/alex/.local/share/rr/${RRTARGETBASENAME}
 RRDIR=${RRDIRBASE}-0
+shift 
+RRARGS="$@"
 
 randomize_va_space=$(cat /proc/sys/kernel/randomize_va_space)
 echo 0 | sudo tee /proc/sys/kernel/randomize_va_space &> /dev/null
@@ -16,6 +20,6 @@ for DIR in $RRDIRBASE-*; do
         rm -rf ${DIR}
     fi
 done
-rr record "$1"
+rr record ${RRTARGET} ${RRARGS}
 echo $randomize_va_space | sudo tee /proc/sys/kernel/randomize_va_space &> /dev/null
 rr replay ${RRDIR}
