@@ -8,7 +8,7 @@ fi
 
 RRTARGET="$1"
 RRTARGETBASENAME=$(basename $RRTARGET)
-RRDIRBASE=/home/alex/.local/share/rr/${RRTARGETBASENAME}
+RRDIRBASE=${HOME}/.local/share/rr/${RRTARGETBASENAME}
 RRDIR=${RRDIRBASE}-0
 shift 
 RRARGS="$@"
