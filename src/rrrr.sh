@@ -14,7 +14,7 @@ fi
 if [ "$#" -eq 0 ]; then
     printf 'Usage: \n\t%s <OPTIONS> <executable> -- <rr-replay-arguments (essentially gdb-arguments)>\n' $0
     echo 'OR'
-    printf 'Usage: \n\t%s <OPTIONS> --last -- <rr-replay-arguments (essentially gdb-arguments)>\n' $0
+    printf 'Usage: \n\t%s <OPTIONS> <executable> --last -- <rr-replay-arguments (essentially gdb-arguments)>\n' $0
     exit 1
 fi
 read -ra args <<< "${FIRST}"
