@@ -50,7 +50,6 @@ if [ ${RUNLAST} == 0 ]; then
     rr record ${RRTARGET} ${RRARGS}
     echo $randomize_va_space | sudo tee /proc/sys/kernel/randomize_va_space &> /dev/null
 fi
-set -x
 if [[ ${RUNCONTINUE} == 1 ]]; then
     expect -c "spawn rr replay ${RRDIR} ${SECOND}; send c\r; interact"
 else
