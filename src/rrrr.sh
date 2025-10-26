@@ -51,7 +51,8 @@ if [ ${RUNLAST} == 0 ]; then
     echo $randomize_va_space | sudo tee /proc/sys/kernel/randomize_va_space &> /dev/null
 fi
 if [[ ${RUNCONTINUE} == 1 ]]; then
-    (echo -e "c\n"; cat /dev/tty) | rr replay ${RRDIR} ${SECOND}
+    # (echo -e "c\n"; cat /dev/tty) | rr replay ${RRDIR} ${SECOND}
+    echo "c" | (read -r input; exec </dev/tty; exec rr replay ${RRDIR} ${SECOND})
 else
     rr replay ${RRDIR} ${SECOND}
 fi
