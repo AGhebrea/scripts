@@ -3,13 +3,16 @@
 parse_args(){
     set -- $FIRST
     OPTIND=1
-    while getopts ":lct:" opt; do
+    while getopts ":lct:a" opt; do
         case "$opt" in
             l) RUNLAST=1 ;;
             c) RUNCONTINUE=1 ;;
             t) RRTARGET="$OPTARG" ;;
+            a) break ;;
         esac
     done
+    shift $((OPTIND - 1))
+    RRARGS=$@
 }
 
 ARGS="$@"
@@ -18,6 +21,7 @@ SECOND=""
 RUNLAST=0
 RUNCONTINUE=0
 RRTARGET=""
+RRARGS=""
 
 if [[ $ARGS == *' -- '* ]]; then
     FIRST="${ARGS% --*}"
@@ -27,15 +31,14 @@ else
 fi
 parse_args
 if [ "$#" -eq 0 ]; then
-    printf 'Usage: \n\t%s [-l] [-c] -t <executable> -- <rr-replay-arguments (essentially gdb-arguments)>\n' $0
-    printf 'Where: \n\t-c: automatically inputs the char "c" in STDIN\n\t-l: runs last recording made with rrrr\n'
+    printf 'Usage: \n\t%s [-l] [-c] -t <executable> -a <executable-arguments> -- <rr-replay-arguments (essentially gdb-arguments)>\n' $0
+    printf 'Where: \n\t-c: automatically inputs the char "c" in STDIN\n\t-l: runs last recording made with rrrr\n\t-t: the target binary\n\ta: the arguments for the target binary, if -l is supplied then -a is ignored.\n'
     exit 1
 fi
 read -ra args <<< "${FIRST}"
 RRTARGETBASENAME=$(basename $RRTARGET)
 RRDIRBASE=${HOME}/.local/share/rr/${RRTARGETBASENAME}
 RRDIR=${RRDIRBASE}-0
-RRARGS="${args[@]:1}"
 randomize_va_space=$(cat /proc/sys/kernel/randomize_va_space)
 if [ ${RUNLAST} == 0 ]; then
     echo 0 | sudo tee /proc/sys/kernel/randomize_va_space &> /dev/null
