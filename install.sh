@@ -6,6 +6,7 @@
 remindSource=0
 
 for file in ./src/*.sh; do
+    chmod +x $file
     bname=$(basename $file)
     bnameStripped="${bname%.*}"
     if [ ! -L "/usr/bin/$bname" ]; then
