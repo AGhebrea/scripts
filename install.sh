@@ -1,8 +1,5 @@
 #!/usr/bin/bash
 
-# alias entest='source entest.sh'
-# alias rrrr='rrrr.sh'
-
 remindSource=0
 
 for file in ./src/*.sh; do
