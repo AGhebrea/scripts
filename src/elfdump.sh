@@ -4,6 +4,8 @@ ARGS=$@
 PROGRAM=""
 DIR=""
 
+# TODO: add recursive option, e.g run readelf for dependencies as well.
+
 usage(){
     printf "Usage: %s: -p <target program> -d <output directory>\n" $0
 }
